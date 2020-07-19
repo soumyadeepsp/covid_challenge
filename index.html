@@ -1,157 +1,329 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COVID Tracker</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/dropdown.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/transition.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="new-style.css">
-    <link rel="stylesheet" href="mobile.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>COVID-19 Tracker</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/dropdown.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/transition.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,900' rel='stylesheet' type='text/css'>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="new-style.css" />
+    <link rel="stylesheet" href="mobile.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <script src="map-style.js"></script>
     <script src="script.js"></script>
     <script src="charts.js"></script>
-</head>
-<body>
-  <div class="container-fluid">
-    <div class="row main">
-      <div class="col-12 col-lg-8 d-flex flex-column">
-        <div class="row header-container">
-          <div class="col-sm title-container">
-            <h2>COVID-19 Tracker</h2>
-          </div>
-          <div class="col-sm mt-3 mt-sm-0 search-container">
-            <div class="ui fluid search selection dropdown">
-              <input type="hidden" name="country">
-              <i class="dropdown icon"></i>
-              <div class="default text">Select Country</div>
-              <div class="menu">
-              </div>
-             </div>
-          </div>
-        </div>
-        <div class="row stats-container">
-          <div class="col-12 col-sm-4 mb-3 mb-sm-0">
-            <div class="card cases active" onclick="changeDataSelection(this, 'cases')">
-              <div class="tab-selection"></div>
-              <div class="card-body">
-                <h6 class="card-title">Coronavirus Cases</h6>
-                <h3 class="card-subtitle mb-2 total-number">1,436,886</h3>
-                <div class="text-muted font-weight-bold total cases-total">1.69M Total</div>
+    <link rel="stylesheet" type="text/css" href="style1.css" />
+    <link rel="stylesheet" type="text/css" href="style2.css" />
+    <link rel="stylesheet" type="text/css" href="style3.css" />
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.min.js"
+    ></script>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row main">
+        <div class="col-12 col-lg-8 d-flex flex-column">
+          <div class="row header-container">
+            <div class="col-sm title-container">
+              <h2>COVID-19 Tracker</h2>
+            </div>
+            <div class="col-sm mt-3 mt-sm-0 search-container">
+              <div class="ui fluid search selection dropdown">
+                <input type="hidden" name="country" />
+                <i class="dropdown icon"></i>
+                <div class="default text">Select Country</div>
+                <div class="menu"></div>
               </div>
             </div>
           </div>
-          <div class="col-12 col-sm-4 mb-3 mb-sm-0">
-            <div class="card recovered" onclick="changeDataSelection(this, 'recovered')">
-              <div class="tab-selection"></div>
-              <div class="card-body">
-                <h6 class="card-title">Recovered</h6>
-                <h3 class="card-subtitle mb-2 recovered-number">302,964</h3>
-                <div class="text-muted font-weight-bold total recovered-total">1.69M Total</div>
+          <div class="row stats-container">
+            <div class="col-12 col-sm-4 mb-3 mb-sm-0">
+              <div
+                class="card cases active"
+                onclick="changeDataSelection(this, 'cases')"
+              >
+                <div class="tab-selection"></div>
+                <div class="card-body">
+                  <h6 class="card-title">Coronavirus Cases</h6>
+                  <h3 class="card-subtitle mb-2 total-number">1,436,886</h3>
+                  <div class="text-muted font-weight-bold total cases-total">
+                    1.69M Total
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-4 mb-3 mb-sm-0">
+              <div
+                class="card recovered"
+                onclick="changeDataSelection(this, 'recovered')"
+              >
+                <div class="tab-selection"></div>
+                <div class="card-body">
+                  <h6 class="card-title">Recovered</h6>
+                  <h3 class="card-subtitle mb-2 recovered-number">302,964</h3>
+                  <div
+                    class="text-muted font-weight-bold total recovered-total"
+                  >
+                    1.69M Total
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-4 mb-3 mb-sm-0">
+              <div
+                class="card deaths"
+                onclick="changeDataSelection(this, 'deaths')"
+              >
+                <div class="tab-selection"></div>
+                <div class="card-body">
+                  <h6 class="card-title">Deaths</h6>
+                  <h3 class="card-subtitle mb-2 deaths-number">82,191</h3>
+                  <div class="text-muted font-weight-bold total deaths-total">
+                    1.69M Total
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div class="col-12 col-sm-4 mb-3 mb-sm-0">
-            <div class="card deaths" onclick="changeDataSelection(this, 'deaths')">
-              <div class="tab-selection"></div>
-              <div class="card-body">
-                <h6 class="card-title">Deaths</h6>
-                <h3 class="card-subtitle mb-2 deaths-number">82,191</h3>
-                <div class="text-muted font-weight-bold total deaths-total">1.69M Total</div>
+          <div class="row map-container flex-grow-1 mt-3">
+            <div class="col">
+              <div id="map"></div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-12 col-lg-4 side-panel-container my-3 d-flex flex-column"
+        >
+          <div class="cases-table-container">
+            <h4>Live Cases by Country</h4>
+            <div class="country-data">
+              <table class="table">
+                <tbody id="table-data"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="chart-container flex-grow-1 mt-3">
+            <h4>Total Cases Globally</h4>
+            <div class="linear-chart p-3">
+              <canvas id="myChart"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 third">
+          <h1>COVID-19 Cases Comparison of 2 Countries</h1>
+          <div class="selection">
+            <div>
+              <span><input type="radio"
+                  name="type"
+                  id="confirmed"
+                  value="confirmed"
+                  checked="checked"
+                /><label for="confirmed">Confirmed</label></span
+              >
+              <span
+                ><input
+                  type="radio"
+                  name="type"
+                  id="deaths"
+                  value="deaths"
+                /><label for="deaths">Deaths</label></span
+              >
+            </div>
+            <div>
+              <label for="country1">Country 1:</label>
+              <select id="country1"></select>
+              <label for="country2">Country 2:</label>
+              <select id="country2"></select>
+            </div>
+          </div>
+          <main>
+            <div class="chart">
+              <div class="loading">LOADING ...</div>
+              <!--chart will be rendered here-->
+            </div>
+          </main>
+        </div>
+        <div class="col-12 fourth">
+          <div id="main">
+            <div class="default-background"></div>
+            <transition :name="transition">
+              <div class="background-image" :key="`image${current_index}`">
+                <img :src="currentPanel.img" />
+              </div>
+            </transition>
+            <div id="wrapper" @wheel="handleScroll" :style="wrapperStyle">
+              <div class="intro">
+                <h1>Covid 19 Timeline</h1>
+                <div>31 Dec 2019 - 14 Jun 2020</div>
+                <a
+                  target="_blank"
+                  class="credit-link"
+                  href="https://www.nytimes.com/article/coronavirus-timeline.html"
+                >
+                  <img
+                    src="https://i.ya-webdesign.com/images/new-york-times-logo-white-png-4.png"
+                  />
+                </a>
+                <div class="scroll-down">
+                  <span>«</span>
+                </div>
+              </div>
+              <div class="inner-wrapper">
+                <div id="timeline">
+                  <div
+                    class="line"
+                    v-for="(p, i) in panels"
+                    :class="getLineClass(i)"
+                    @mouseenter="current_index = i"
+                  ></div>
+                  <div class="time" :style="time_position" ref="time">
+                    {{display_day}} {{display_month}}
+                  </div>
+                </div>
+                <div id="panel-wrapper">
+                  <transition :name="transition" mode="out-in">
+                    <div class="panel" :key="`index-${current_index}`">
+                      <h1>{{currentPanel.title}}</h1>
+                      <div class="desc" v-html="currentPanel.desc"></div>
+                    </div>
+                  </transition>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="row map-container flex-grow-1 mt-3">
-          <div class="col">
-            <div id="map"></div>
-          </div>
-        </div>
-        <!-- <div class="row chart-container mt-3">
-          <div class="col linear-chart p-3 mr-3">
-            <canvas id="myChart"></canvas>
-          </div>
-          <div class="col p-3">
-            <canvas id="myPieChart"></canvas>
-          </div>
-        </div> -->
-      </div>
-      <div class="col-12 col-lg-4 side-panel-container my-3 d-flex flex-column">
-        <div class="cases-table-container">
-          <h4>Live Cases by Country</h4>
-          <div class="country-data">
-            <table class="table">
-              <tbody id="table-data">
-
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="chart-container flex-grow-1 mt-3">
-          <h4>Total Cases Globally</h4>
-          <div class="linear-chart p-3">
-            <canvas id="myChart"></canvas>
+        <div class="col-12 fifth">
+          <div class="container">
+            <div class="row">
+              <a class="post" href="https://www.ynetnews.com/article/SkT38illP" target="_blank"><div class="col-md-4">
+                <div class="inner">
+                  <p class="category p">News <span class="date"><i class="fa fa-clock-o"></i>2014.11.19</p>
+                  <h2 class="h2">1,009 new coronavirus cases since midnight, say health officials</h2>
+                  <p class="p">At least 1,009 new coronavirus cases have been recorded in Israel since midnight, the Coronavirus National Knowledge and Information Center said Saturday.  The report said that six more people died from complications related to COVID-19, bringing the total nu…</p>
+                  <a class="read-more" href="https://www.ynetnews.com/article/SkT38illP" target="_blank">Read More</a>
+                </div>   
+                </div></a>
+              <a class="post" href="https://www.commondreams.org/sites/default/files/views-article/thumbs/trump_resign.jpg" target="_blank"><div class="col-md-4">
+                <div class="inner">
+                  <p class="category p">News <span class="date"><i class="fa fa-clock-o"></i>2014.11.23</p>
+                  <h2 class="h2">Wake Up, America! We Must Force Trump to Resign or At Least Step Aside</h2>
+                  <p class="p">Your messages tell presidents which way the political winds are blowing. Make this \"rumble of the people\" speak loud and clear NOW!.. Public Citizen’s open letter, co-signed by over twenty nonprofit civic organizations working for the public health, demanded …</p>
+                  <a class="read-more" href="https://www.commondreams.org/sites/default/files/views-article/thumbs/trump_resign.jpg">Read More</a>
+                </div>   
+                </div></a>
+              <a class="post" href="https://i.cbc.ca/1.5618240.1593381372!/httpImage/image.jpg_gen/derivatives/16x9_620/covid-19.jpg" target="_blank"><div class="col-md-4">
+                <div class="inner">
+                  <p class="category p">Life <span class="date"><i class="fa fa-clock-o"></i>2014.11.29</p>
+                  <h2 class="h2">No new cases of COVID-19 in N.B. for 3rd straight day</h2>
+                  <p class="p">There are no new cases of COVID-19 in New Brunswick today, the third day in a row since a single case was reported Wednesday.</p>
+                  <a class="read-more" href="https://i.cbc.ca/1.5618240.1593381372!/httpImage/image.jpg_gen/derivatives/16x9_620/covid-19.jpg" target="_blank">Read More</a>
+                </div>   
+                </div></a>
+              <a class="post" href="https://indianexpress.com/article/cities/pune/pune-coronavirus-update-hospital-study-oxygen-levels-early-detection-6512441/" target="_blank"><div class="col-md-4">
+                <div class="inner">
+                  <p class="category p">Crime <span class="date"><i class="fa fa-clock-o"></i>2014.11.31</p>
+                  <h2 class="h2">Pune hospital study raises concern over dropping oxygen levels, flags need for early detection</h2>
+                  <p class="p">Severe headache, loss of taste among Covid symptoms</p>
+                  <a class="read-more" href="https://indianexpress.com/article/cities/pune/pune-coronavirus-update-hospital-study-oxygen-levels-early-detection-6512441/" target="_blank">Read More</a>
+                </div>   
+                </div></a>
+              <a class="post" href="https://www.insideover.com/economy/the-united-kingdoms-5g-decision-taking-a-stand-against-china.html" target="_blank"><div class="col-md-4">
+                <div class="inner">
+                  <p class="category p">Daily <span class="date"><i class="fa fa-clock-o"></i>2014.10.28</p>
+                  <h2 class="h2">The Great Britain's 5G decision Taking a stand against China</h2>
+                  <p class="p">It came as no surprise, and has certainly been anticipated in the pages of this publication, that the British government decided to prohibit telecom providers from buying new equipment for 5G networks from Huawei Technologies. It is undoubtedly a U-turn for t…</p>
+                  <a class="read-more" href="https://www.insideover.com/economy/the-united-kingdoms-5g-decision-taking-a-stand-against-china.html" target="_blank">Read More</a>
+                </div>   
+                </div></a>
+              <a class="post" href="https://checkyourfact.com/2020/07/18/fact-check-barack-obama-anthony-fauci-melinda-gates-wuhan-institute-virology/" target="_blank"><div class="col-md-4">
+                <div class="inner">
+                  <p class="category p">History<span class="date"><i class="fa fa-clock-o"></i>2014.10.26</p>
+                  <h2 class="h2">Does This Photo Show Barack Obama, Anthony Fauci And Melinda Gates At The Wuhan Institute Of Virology In 2015?</h2>
+                  <p class="p">An image shared on Facebook purportedly shows Barack Obama, Anthony Fauci and Melinda Gates visiting the Wuhan Institute of Virology in 2015.</p>
+                  <a class="read-more" href="https://checkyourfact.com/2020/07/18/fact-check-barack-obama-anthony-fauci-melinda-gates-wuhan-institute-virology/" target="_blank">Read More</a>
+                </div>   
+                </div></a>
+              <a class="post" href="https://indianexpress.com/article/india/maharashtra-dairies-brace-for-further-losses-as-lockdown-returns-in-urban-pockets-6512424/" target="_blank"><div class="col-md-4">
+                <div class="inner">
+                  <p class="category p">Breakthrough <span class="date"><i class="fa fa-clock-o"></i>2014.10.19</p>
+                  <h2 class="h2">Maharashtra: Dairies brace for further losses as lockdown returns in urban pockets</h2>
+                  <p class="p">Of the 11.50 lakh litres of milk it collects daily, Gokul dairy said, it was forced to covert around 1 lakh litres into SMP. “This is an improvement from the situation in April- May, when our sales had dipped by 2-2.5 lakh litres per day,” he said.</p>
+                  <a class="read-more" href="https://indianexpress.com/article/india/maharashtra-dairies-brace-for-further-losses-as-lockdown-returns-in-urban-pockets-6512424/" target="_blank">Read More</a>
+                </div>   
+                </div></a>
+              <a class="post" href="https://www.rawstory.com/2020/07/top-14-most-startling-things-kanye-west-said-at-his-first-rally-from-his-attack-on-harriet-tubman-to-calling-steve-jobs-a-nazi/" target="_blank"><div class="col-md-4">
+                <div class="inner">
+                  <p class="category p">World <span class="date"><i class="fa fa-clock-o"></i>2014.10.10</p>
+                  <h2 class="h2">Top 14 most startling things Kanye West said at his first rally — from his attack on Harriet Tubman to calling Steve Jobs a Nazi</h2>
+                  <p class="p">Kanye West is working to be a spoiler candidate for Vice President Joe Biden, pulling away Black voters from supporting the Democratic candidate with his own presidential run. But West’s first rally didn’t appear to go well. Appearing in front of a half-full …</p>
+                  <a class="read-more" href="https://www.rawstory.com/2020/07/top-14-most-startling-things-kanye-west-said-at-his-first-rally-from-his-attack-on-harriet-tubman-to-calling-steve-jobs-a-nazi/" target="_blank">Read More</a>
+                </div>   
+                </div></a>
+              <a class="post" href="https://www.seattlepi.com/business/article/Virus-deaths-top-600-000-as-cases-rise-in-15418409.php" target="_blank"><div class="col-md-4">
+                <div class="inner">
+                  <p class="category p">Tech <span class="date"><i class="fa fa-clock-o"></i>2014.11.2</p>
+                  <h2 class="h2">Governments around world eye tougher steps to fight virus</h2>
+                  <p class="p">Signs of governments reassessing their coronavirus response were scattered around the world Sunday, with the mayor of Los Angeles saying the city was reopened too quickly, Ohio's governor warning his state is \"going the wrong way,\" Hong Kong issuing tougher n…</p>
+                  <a class="read-more" href="https://www.seattlepi.com/business/article/Virus-deaths-top-600-000-as-cases-rise-in-15418409.php" target="_blank">Read More</a>
+                </div>   
+                </div></a>
+              
+              
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-    <!-- <div id="nav">
 
-    </div> -->
-    <!-- <div class="map-info">
-        <div id="map"></div>
-
-    </div> -->
-    <!-- <div class="data-info">
-      <div class="country-data">
-        <table class="table table-striped table-dark">
-          <thead>
-            <tr>
-              <th scope="col">Country Name</th>
-              <th scope="col">Cases</th>
-              <th scope="col">Recovered</th>
-              <th scope="col">Deaths</th>
-            </tr>
-          </thead>
-          <tbody id="table-data">
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
-        </table>
-      </div> -->
-      <!-- <div class="chart-data">
-        <canvas id="myChart"></canvas>
-      </div>
-    </div> -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJ7VvobsIYLr3Pe6cTNUnIUvzgpV2Na-o&callback=initMap"
-    async defer></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJ7VvobsIYLr3Pe6cTNUnIUvzgpV2Na-o&callback=initMap"
+      async
+      defer
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/dropdown.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/transition.min.js"></script>
-</body>
+
+    <script src="script1.js" type="text/javascript"></script>
+    <script src="script2.js" type="text/javascript"></script>
+    <script src="script3.js" type="text/javascript"></script>
+  </body>
 </html>
