@@ -71,3 +71,7 @@ body {
   width: 100vw;
   overflow-x: hidden;
 }
+
+.cases-table-container {
+  margin-left: -150px !important;
+}
