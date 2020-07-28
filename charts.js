@@ -1,15 +1,11 @@
 const buildChartData = (data) => {
     let chartData = [];
-    let lastDataPoint;
     for(let date in data.cases){
-        if(lastDataPoint){
-            let newDataPoint = {
-                x: date,
-                y: data.cases[date] - lastDataPoint
-            }
-            chartData.push(newDataPoint);
+        let newDataPoint = {
+            x: date,
+            y: data.cases[date]
         }
-        lastDataPoint = data.cases[date];
+        chartData.push(newDataPoint);
     }
     return chartData;
 }
@@ -37,11 +33,6 @@ const buildChart = (chartData) => {
             tooltips: {
                 mode: 'index',
                 intersect: false
-            },
-            elements: {
-                point:{
-                    radius: 0
-                }
             },
             scales:     {
                 xAxes: [{

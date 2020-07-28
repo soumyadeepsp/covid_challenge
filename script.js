@@ -17,7 +17,7 @@ const wordwideSelection = {
     selected: true
 }
 var casesTypeColors = {
-    cases: '#cc1034',
+    cases: '#1d2c4d',
     active: '#9d80fe',
     recovered: '#7dd71d',
     deaths: '#fb4443'
@@ -35,16 +35,9 @@ function initMap() {
     infoWindow = new google.maps.InfoWindow();
 }
 
-const changeDataSelection = (elem, casesType) => {
+const changeDataSelection = (casesType) => {
     clearTheMap();
     showDataOnMap(coronaGlobalData, casesType);
-    setActiveTab(elem);
-}
-
-const setActiveTab = (elem) => {
-    const activeEl = document.querySelector('.card.active');
-    activeEl.classList.remove('active')
-    elem.classList.add("active");
 }
 
 const clearTheMap = () => {
